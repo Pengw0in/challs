@@ -525,17 +525,17 @@
                     <div class="points">100 points</div>
                 </div>
                 <div class="challenge-footer">
-                    <a href="bookworm/index.html" class="launch-btn">Launch</a>
+                    <a href="NoteBook/index.html" class="launch-btn">Launch</a>
                 </div>
             </div>
             
-            <div class="challenge-card" onclick="window.location.href='cookies/index.html'" data-challenge="cookies">
+            <div class="challenge-card" onclick="window.location.href='cookies/index.html'" data-challenge="Cookies">
                 <div class="challenge-header">
                     <div class="challenge-icon">
                         <i class="fas fa-cookie-bite"></i>
                     </div>
                     <div class="challenge-info">
-                        <div class="challenge-title">cookies</div>
+                        <div class="challenge-title">Cookies</div>
                         <div class="challenge-category">Web</div>
                     </div>
                 </div>
@@ -550,57 +550,13 @@
                     <a href="cookies/index.html" class="launch-btn">Launch</a>
                 </div>
             </div>
-            
-            <div class="challenge-card" onclick="window.location.href='DigitalFootprint/index.html'" data-challenge="DigitalFootprint">
-                <div class="challenge-header">
-                    <div class="challenge-icon">
-                        <i class="fas fa-search"></i>
-                    </div>
-                    <div class="challenge-info">
-                        <div class="challenge-title">DigitalFootprint</div>
-                        <div class="challenge-category">OSINT</div>
-                    </div>
-                </div>
-                <div class="challenge-description">
-                    A developer left traces across the internet. Follow the breadcrumbs to uncover their secrets.
-                </div>
-                <div class="challenge-meta">
-                    <div class="difficulty medium">Medium</div>
-                    <div class="points">150 points</div>
-                </div>
-                <div class="challenge-footer">
-                    <a href="DigitalFootprint/index.html" class="launch-btn">Launch</a>
-                </div>
-            </div>
-            
-            <div class="challenge-card" onclick="window.location.href='CodeRunner/index.html'" data-challenge="CodeRunner">
-                <div class="challenge-header">
-                    <div class="challenge-icon">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <div class="challenge-info">
-                        <div class="challenge-title">CodeRunner</div>
-                        <div class="challenge-category">Web</div>
-                    </div>
-                </div>
-                <div class="challenge-description">
-                    A GitHub code playground that executes user input. Can you make it run more than intended?
-                </div>
-                <div class="challenge-meta">
-                    <div class="difficulty medium">Medium</div>
-                    <div class="points">200 points</div>
-                </div>
-                <div class="challenge-footer">
-                    <a href="CodeRunner/index.html" class="launch-btn">Launch</a>
-                </div>
-            </div>
         </div>
         
         <div class="stats-section">
             <div class="stats-title">Challenge Statistics</div>
             <div class="stats-grid">
                 <div class="stat-item">
-                    <div class="stat-number" id="totalChallenges">6</div>
+                    <div class="stat-number" id="totalChallenges">4</div>
                     <div class="stat-label">Total Challenges</div>
                 </div>
                 <div class="stat-item">
@@ -608,7 +564,7 @@
                     <div class="stat-label">Solved Challenges</div>
                 </div>
                 <div class="stat-item">
-                    <div class="stat-number" id="totalPoints">675</div>
+                    <div class="stat-number" id="totalPoints">325</div>
                     <div class="stat-label">Total Points</div>
                 </div>
                 <div class="stat-item">
@@ -638,8 +594,6 @@
                         <option value="RobotRules">RobotRules</option>
                         <option value="NoteBook">NoteBook</option>
                         <option value="Cookies">Cookies</option>
-                        <option value="DigitalFootprint">DigitalFootprint</option>
-                        <option value="CodeRunner">CodeRunner</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -657,21 +611,17 @@
             'ViewSource': { points: 50 },
             'RobotRules': { points: 75 },
             'NoteBook': { points: 100 },
-            'Cookies': { points: 100 },
-            'DigitalFootprint': { points: 150 },
-            'CodeRunner': { points: 200 }
+            'Cookies': { points: 100 }
         };
 
         const _0x2f4a = [
             'R1dTe2hvd190b19tYWtlX2xlbW9uYWRlfQ==', // GWS{how_to_make_lemonade}
             'R1dTe21yX1IwYjB0fQ==', // GWS{mr_R0b0t}
-            'R1dTezBIX3NoMXRfMW50fQ==', // GWS{0H_sh1t_1nt}
-            'R1dTe2MwMDAwazEzX20wbnN0M3J9', // GWS{c0000ki3_m0nst3r}
-            'R1dTe1JpY2smTW9ydHl9', // GWS{Rick&Morty}
-            'R1dTe2V0Yy9oYWhhYWgvfQ==' // GWS{etc/hahaha/}
+            'R1dTe3RoaXNfd2FzX2JydXRhbH0=', // GWS{etc/hahaha/}
+            'R1dTe2MwMDAwa2kzX20wbnN0M3J9'
         ];
 
-        const _0x1b7c = ['ViewSource', 'RobotRules', 'NoteBook', 'Cookies', 'DigitalFootprint', 'CodeRunner'];
+        const _0x1b7c = ['ViewSource', 'RobotRules', 'NoteBook', 'Cookies'];
 
         // Decode function
         const _decode = (str) => atob(str);
