@@ -637,30 +637,18 @@
             document.getElementById('loginForm').classList.remove('hidden');
             document.getElementById('registerForm').classList.add('hidden');
             document.getElementById('dashboard').classList.add('hidden');
-            
-            // Update URL to show signin
-            const cleanPath = window.location.pathname.replace('/index.html', '/auth');
-            history.pushState(null, '', cleanPath);
         }
         
         function showRegister() {
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('registerForm').classList.remove('hidden');
             document.getElementById('dashboard').classList.add('hidden');
-            
-            // Update URL to show register
-            const cleanPath = window.location.pathname.replace('/index.html', '/register');
-            history.pushState(null, '', cleanPath);
         }
         
         function showDashboard() {
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('registerForm').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
-            
-            // Update URL to show dashboard (clean path)
-            const cleanPath = window.location.pathname.replace('/index.html', '/').replace('/Auth', '/');
-            history.pushState(null, '', cleanPath);
             
             // Start the live clock when dashboard is shown
             updateLiveClock();
@@ -832,22 +820,6 @@
         }
         
         window.onload = function() {
-            // Clean up URL on initial load
-            if (window.location.pathname.endsWith('/index.html')) {
-                const cleanPath = window.location.pathname.replace('/index.html', '/auth');
-                history.replaceState(null, '', cleanPath);
-            }
-            
-            // Handle URL-based routing
-            const currentPath = window.location.pathname;
-            if (currentPath.includes('/register')) {
-                showRegister();
-                return;
-            } else if (currentPath.includes('/auth')) {
-                showLogin();
-                return;
-            }
-            
             const cookies = document.cookie.split(';').reduce((acc, cookie) => {
                 const [key, value] = cookie.trim().split('=');
                 acc[key] = value;
@@ -857,40 +829,8 @@
             if (cookies.user && cookies.role) {
                 showDashboard();
                 loadDashboard();
-            } else {
-                // Default to signin if no cookies
-                showLogin();
             }
         };
-        
-        // Handle browser back/forward buttons
-        window.addEventListener('popstate', function(event) {
-            const currentPath = window.location.pathname;
-            
-            if (currentPath.includes('/register')) {
-                document.getElementById('loginForm').classList.add('hidden');
-                document.getElementById('registerForm').classList.remove('hidden');
-                document.getElementById('dashboard').classList.add('hidden');
-            } else if (currentPath.includes('/auth')) {
-                document.getElementById('loginForm').classList.remove('hidden');
-                document.getElementById('registerForm').classList.add('hidden');
-                document.getElementById('dashboard').classList.add('hidden');
-            } else {
-                // Check if user is logged in for dashboard
-                const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-                    const [key, value] = cookie.trim().split('=');
-                    acc[key] = value;
-                    return acc;
-                }, {});
-                
-                if (cookies.user && cookies.role) {
-                    showDashboard();
-                    loadDashboard();
-                } else {
-                    showLogin();
-                }
-            }
-        });
     </script>
 </body>
 </html>
