@@ -4,5 +4,5 @@ Disallow: /private/
 Disallow: /secret-flag.txt
 
 # Are you a crawler?
-# Oooh what do we have here? Seems enocded
-# Z2l0e3IwYjB0c19hUjNfaDNyM30=
+# Oooh what do we have here? Seems encoded
+# R1dTe21yX1IwYjB0fQ==
