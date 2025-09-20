@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="icon" type="image/x-icon" href="../logo.ico">
+  <title>Git-user / secret-repo · GitHub</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0d1117;
+      margin: 0;
+      color: #f0f6fc;
+      min-height: 100vh;
+    }
+    
+    .topbar {
+      background-color: #161b22;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      color: #f0f6fc;
+      border-bottom: 1px solid #30363d;
+    }
+    
+    .topbar .fa-github {
+      margin-right: 8px;
+      color: #f0f6fc;
+      font-size: 24px;
+    }
+    
+    .topbar .github-text {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
+    .repo-header {
+      padding: 16px;
+      border-bottom: 1px solid #30363d;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #0d1117;
+    }
+    
+    .repo-header h1 {
+      font-size: 20px;
+      margin: 0;
+      font-weight: 600;
+      color: #f0f6fc;
+    }
+    
+    .repo-header h1 span {
+      font-weight: 400;
+      color: #58a6ff;
+    }
+    
+    .repo-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .repo-actions button {
+      border: 1px solid #30363d;
+      background: #21262d;
+      color: #f0f6fc;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin: 0;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .repo-actions button:hover {
+      background-color: #30363d;
+    }
+    
+    nav.tabs {
+      display: flex;
+      border-bottom: 1px solid #30363d;
+      background: #161b22;
+      padding: 0 16px;
+    }
+    
+    nav.tabs a {
+      padding: 12px 16px;
+      text-decoration: none;
+      color: #7d8590;
+      font-size: 14px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    nav.tabs a:hover {
+      color: #f0f6fc;
+    }
+    
+    nav.tabs a.active {
+      border-bottom-color: #fd8c73;
+      color: #f0f6fc;
+      font-weight: 600;
+    }
+    
+    .layout {
+      max-width: 1200px;
+      margin: 32px auto;
+      padding: 0 24px;
+    }
+    
+    .file-list {
+      width: 100%;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      margin-bottom: 32px;
+      background-color: #161b22;
+      border-collapse: collapse;
+    }
+    
+    .file-list tr {
+      border-bottom: 1px solid #30363d;
+    }
+    
+    .file-list tr:last-child {
+      border-bottom: none;
+    }
+    
+    .file-list tr:hover {
+      background-color: #21262d;
+    }
+    
+    .file-list td {
+      padding: 12px 16px;
+      font-size: 14px;
+      vertical-align: middle;
+      color: #f0f6fc;
+    }
+    
+    .file-list td:first-child {
+      width: 40px;
+      font-size: 16px;
+      color: #58a6ff;
+    }
+    
+    .file-list a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    
+    .file-list a:hover {
+      text-decoration: underline;
+    }
+    
+    .file-size {
+      color: #7d8590;
+      font-size: 12px;
+    }
+    
+    .readme {
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 32px;
+      background: #161b22;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    .readme h1 {
+      font-size: 32px;
+      margin-top: 0;
+      margin-bottom: 24px;
+      color: #f0f6fc;
+      font-weight: 600;
+    }
+    
+    .readme p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      color: #8b949e;
+    }
+    
+    .readme em {
+      color: #58a6ff;
+      font-style: normal;
+      font-weight: 500;
+    }
+    
+    footer {
+      text-align: center;
+      color: #7d8590;
+      font-size: 13px;
+      margin: 60px 0 40px;
+      padding: 24px;
+      border-top: 1px solid #30363d;
+    }
+    
+    @media (max-width: 768px) {
+      .layout {
+        padding: 0 16px;
+        margin: 24px auto;
+      }
+      
+      .repo-header {
+        padding: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      .repo-actions {
+        display: flex;
+        gap: 8px;
+      }
+      
+      .repo-actions button {
+        border: 1px solid #30363d;
+        background: #21262d;
+        color: #f0f6fc;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 12px;
+        margin: 0;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      
+      .readme {
+        padding: 24px;
+      }
+      
+      .readme h1 {
+        font-size: 24px;
+      }
+      
+      nav.tabs {
+        overflow-x: auto;
+        padding: 0 16px;
+      }
+      
+      nav.tabs a {
+        white-space: nowrap;
+        padding: 12px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <i class="fab fa-github"></i>
+    <span class="github-text">GitHub - HackTheWeb</span>
+  </div>
+
+  <div class="repo-header">
+    <h1><span>larry_wasHere</span> / secret-repo</h1>
+    <div class="repo-actions">
+      <button><i class="fas fa-star"></i> Star</button>
+      <button><i class="fas fa-code-branch"></i> Fork</button>
+      <button><i class="fas fa-eye"></i> Watch</button>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <a href="#" class="active">
+      <i class="fas fa-code"></i>
+      Code
+    </a>
+    <a href="#">
+      <i class="fas fa-exclamation-circle"></i>
+      Issues
+    </a>
+    <a href="#">
+      <i class="fas fa-code-branch"></i>
+      Pull requests
+    </a>
+    <a href="#">
+      <i class="fas fa-play"></i>
+      Actions
+    </a>
+    <a href="#">
+      <i class="fas fa-book"></i>
+      Wiki
+    </a>
+  </nav>
+
+  <div class="layout">
+    <table class="file-list">
+      <tr>
+        <td><i class="fas fa-file-alt"></i></td>
+        <td><a href="javascript:void(0)" onclick="window.location.href = window.location.pathname.replace('/index.html', '') + '/secret.txt'">secret.txt</a></td>
+        <td align="right"><span class="file-size">45 B</span></td>
+      </tr>
+      <tr>
+        <td><i class="fas fa-file-contract"></i></td>
+        <td><a href="javascript:void(0)" onclick="window.location.href = window.location.pathname.replace('/index.html', '') + '/LICENSE'">LICENSE</a></td>
+        <td align="right"><span class="file-size">1.1 KB</span></td>
+      </tr>
+    </table>
+
+    <div class="readme">
+      <h1>secret-repo</h1>
+      <p>Try poking around: sometimes useful things are not in the repository itself, but in
+            auxiliary files on the server.</p>
+      <p><em>Hint:</em> Some files aren't listed here but bots might still find them <i class="fas fa-robot"></i>.</p>
+    </div>
+  </div>
+
+  <footer>
+      © 2025 fake-user · <em style="color: #7d8590;">Most of the functionality is dummy</em>
+  </footer>
+
+  <script>
+    // Clean up URL if it shows index.html
+    if (window.location.pathname.endsWith('/index.html')) {
+      const cleanPath = window.location.pathname.replace('/index.html', '/');
+      history.replaceState(null, '', cleanPath);
+    }
+
+    // Handle file navigation without showing index.html
+    function navigateToFile(filename) {
+      const currentPath = window.location.pathname;
+      const basePath = currentPath.endsWith('/') ? currentPath : currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+      window.location.href = basePath + filename;
+    }
+  </script>
+</body>
+</html>

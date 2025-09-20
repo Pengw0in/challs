@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="../logo.ico">
+    <title>GitHub Auth - Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0d1117;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f0f6fc;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 60px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 1100px;
+            min-height: 80vh;
+        }
+        
+        .form-container {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 60vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .github-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 50%;
+        }
+        
+        h2 {
+            color: #f0f6fc;
+            margin-bottom: 2rem;
+            font-size: 32px;
+            font-weight: 600;
+        }
+        
+        h3 {
+            color: #f0f6fc;
+            margin-bottom: 1.5rem;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.75rem;
+            color: #f0f6fc;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #f0f6fc;
+            transition: border-color 0.2s;
+        }
+        
+        input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        
+        input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: #7d8590;
+        }
+        
+        .btn {
+            width: 100%;
+            max-width: 400px;
+            padding: 12px 20px;
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin: 1.5rem auto;
+            display: block;
+        }
+        
+        .btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .btn-secondary {
+            background-color: #21262d;
+            border: 1px solid #30363d;
+            color: #f0f6fc;
+            width: auto;
+            margin: 0 5px 10px 0;
+            padding: 8px 16px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #30363d;
+        }
+        
+        .toggle-link {
+            color: #58a6ff;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 16px;
+        }
+        
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 15px;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 16px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .success {
+            background-color: #1a2e1a;
+            color: #3fb950;
+            border: 1px solid #2ea043;
+        }
+        
+        .error {
+            background-color: #2e1a1a;
+            color: #f85149;
+            border: 1px solid #da3633;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .dashboard-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .dashboard-title h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .live-clock {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px 20px;
+            text-align: center;
+        }
+        
+        .live-time {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 18px;
+            color: #58a6ff;
+            font-weight: 600;
+        }
+        
+        .live-date {
+            font-size: 12px;
+            color: #7d8590;
+            margin-top: 4px;
+        }
+        
+        .dashboard-content {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-content p {
+            margin-bottom: 0.75rem;
+            color: #f0f6fc;
+            font-size: 16px;
+        }
+        
+        .dashboard-content strong {
+            color: #58a6ff;
+        }
+        
+        .user-card {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .settings-card {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        
+        .setting-item {
+            padding: 20px 0;
+            border-bottom: 1px solid #30363d;
+        }
+        
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .setting-label {
+            font-weight: 500;
+            color: #f0f6fc;
+            font-size: 16px;
+        }
+        
+        .setting-value {
+            color: #7d8590;
+            font-size: 16px;
+        }
+        
+        .edit-btn {
+            background-color: transparent;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .edit-btn:hover {
+            background-color: #1f2937;
+            border-color: #58a6ff;
+        }
+        
+        #adminFlag {
+            background-color: #1a2e1a;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border: 2px solid #2ea043;
+        }
+        
+        #adminFlag h3 {
+            color: #3fb950;
+            margin-bottom: 1rem;
+            font-size: 22px;
+        }
+        
+        #adminFlag p {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 16px;
+            color: #f0f6fc;
+            background-color: #161b22;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            word-break: break-all;
+        }
+        
+        .auth-text {
+            color: #7d8590;
+            font-size: 16px;
+            margin-top: 1.5rem;
+        }
+        
+        .edit-form {
+            margin-top: 1.5rem;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .btn-group .btn {
+            width: auto;
+            margin-bottom: 0;
+            flex: 1;
+            margin: 0;
+        }
+        
+        .btn-group .btn-secondary {
+            width: auto;
+            margin-bottom: 0;
+            flex: 1;
+            margin: 0;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+        
+        .main-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            align-items: start;
+        }
+        
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .status-card {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .status-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: #58a6ff;
+        }
+        
+        .status-title {
+            color: #f0f6fc;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        
+        .status-value {
+            color: #58a6ff;
+            font-size: 14px;
+        }
+        
+        .hint-text {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            color: #7d8590;
+            font-style: italic;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+        
+        .logout-section {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .main-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+                min-height: 90vh;
+            }
+            
+            .github-logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            h2 {
+                font-size: 28px;
+            }
+            
+            .live-time {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="loginForm" class="form-container">
+            <div class="header">
+                <img src="../logo.webp" alt="GitHub Logo" class="github-logo">
+                <h2>GitHub HackTheWeb</h2>
+            </div>
+            <div id="loginMessage"></div>
+            <form onsubmit="return login(event)">
+                <div class="form-group">
+                    <label for="loginUsername">Username:</label>
+                    <input type="text" id="loginUsername" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Sign in</button>
+            </form>
+            <p class="auth-text">Don't have an account? <span class="toggle-link" onclick="showRegister()">Create an account</span></p>
+        </div>
+        
+        <div id="registerForm" class="form-container hidden">
+            <div class="header">
+                <img src="../logo.webp" alt="GitHub Logo" class="github-logo">
+                <h2>Create Account</h2>
+            </div>
+            <div id="registerMessage"></div>
+            <form onsubmit="return register(event)">
+                <div class="form-group">
+                    <label for="regUsername">Username:</label>
+                    <input type="text" id="regUsername" placeholder="Pick a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn">Create account</button>
+            </form>
+            <p class="auth-text">Already have an account? <span class="toggle-link" onclick="showLogin()">Sign in</span></p>
+        </div>
+        
+        <div id="dashboard" class="hidden">
+            <div class="dashboard-header">
+                <div class="dashboard-title">
+                    <img src="../logo.webp" alt="GitHub Logo" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <h2>Dashboard</h2>
+                </div>
+                <div class="live-clock">
+                    <div class="live-time" id="liveTime"></div>
+                    <div class="live-date" id="liveDate"></div>
+                </div>
+            </div>
+            
+            <div id="dashboardMessage"></div>
+            
+            <div class="main-section">
+                <div class="left-panel">
+                    <div class="user-card">
+                        <div class="dashboard-content">
+                            <p><strong>Welcome back, <span id="currentUser"></span>!</strong></p>
+                            <p>User Role: <span id="userRole" style="text-transform: capitalize;"></span></p>
+                            <p class="hint-text"><i class="fas fa-lightbulb"></i> Check what your browser is storing for this site <i class="fas fa-cookie-bite"></i></p>
+                        </div>
+                    </div>
+                    
+                    <div id="adminFlag" class="hidden">
+                        <h3><i class="fas fa-lock"></i> Sensitive Code Access</h3>
+                        <p id="flagContent"></p>
+                    </div>
+                    
+                    <div class="settings-card">
+                        <h3>Account Settings</h3>
+                        
+                        <div class="setting-item" id="usernameSection">
+                            <div class="setting-header">
+                                <div>
+                                    <div class="setting-label">Username</div>
+                                    <div class="setting-value" id="displayUsername"></div>
+                                </div>
+                                <button class="edit-btn" onclick="showEditUsername()">Edit</button>
+                            </div>
+                            <div id="editUsernameForm" class="edit-form hidden">
+                                <div class="form-group">
+                                    <label for="newUsername">New Username:</label>
+                                    <input type="text" id="newUsername" placeholder="Enter new username">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn" onclick="updateUsername()">Update</button>
+                                    <button class="btn-secondary" onclick="cancelEdit('username')">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item" id="passwordSection">
+                            <div class="setting-header">
+                                <div>
+                                    <div class="setting-label">Password</div>
+                                    <div class="setting-value">••••••••</div>
+                                </div>
+                                <button class="edit-btn" onclick="showEditPassword()">Edit</button>
+                            </div>
+                            <div id="editPasswordForm" class="edit-form hidden">
+                                <div class="form-group">
+                                    <label for="currentPassword">Current Password:</label>
+                                    <input type="password" id="currentPassword" placeholder="Enter current password">
+                                </div>
+                                <div class="form-group">
+                                    <label for="newPassword">New Password:</label>
+                                    <input type="password" id="newPassword" placeholder="Enter new password">
+                                </div>
+                                <div class="btn-group">
+                                    <button class="btn" onclick="updatePassword()">Update</button>
+                                    <button class="btn-secondary" onclick="cancelEdit('password')">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="right-panel">
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="status-title">Session Status</div>
+                        <div class="status-value">Active</div>
+                    </div>
+                    
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="status-title">Access Level</div>
+                        <div class="status-value" id="securityLevel">default</div>
+                    </div>
+                    
+                    <div class="status-card">
+                        <div class="status-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="status-title">Last Login</div>
+                        <div class="status-value" id="lastLogin"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="logout-section">
+                <button class="btn" onclick="logout()" style="max-width: 200px;">Sign out</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let users = JSON.parse(localStorage.getItem('users') || '{}');
+        
+        const _0x2f4c = ['R1dTe2MwMGsxM3NfNHIzX24wdF9zM2N1cjNfNHRfNGxsfQ=='];
+        const _0x4b2a = atob(_0x2f4c[0]);
+        
+        function updateLiveClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            const dateString = now.toLocaleDateString('en-US', {
+                weekday: 'short',
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric'
+            });
+            
+            document.getElementById('liveTime').textContent = timeString;
+            document.getElementById('liveDate').textContent = dateString;
+        }
+        
+        function showMessage(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<div class="message ${type}">${message}</div>`;
+            setTimeout(() => {
+                element.innerHTML = '';
+            }, 3000);
+        }
+        
+        function showLogin() {
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            
+            // Update URL to show signin
+            const cleanPath = window.location.pathname.replace('/index.html', '/auth');
+            history.pushState(null, '', cleanPath);
+        }
+        
+        function showRegister() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+            document.getElementById('dashboard').classList.add('hidden');
+            
+            // Update URL to show register
+            const cleanPath = window.location.pathname.replace('/index.html', '/register');
+            history.pushState(null, '', cleanPath);
+        }
+        
+        function showDashboard() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            
+            // Update URL to show dashboard (clean path)
+            const cleanPath = window.location.pathname.replace('/index.html', '/').replace('/Auth', '/');
+            history.pushState(null, '', cleanPath);
+            
+            // Start the live clock when dashboard is shown
+            updateLiveClock();
+            setInterval(updateLiveClock, 1000);
+        }
+        
+        function showEditUsername() {
+            document.getElementById('editUsernameForm').classList.remove('hidden');
+            document.getElementById('newUsername').value = document.getElementById('currentUser').textContent;
+        }
+        
+        function showEditPassword() {
+            document.getElementById('editPasswordForm').classList.remove('hidden');
+        }
+        
+        function cancelEdit(type) {
+            document.getElementById(`edit${type.charAt(0).toUpperCase() + type.slice(1)}Form`).classList.add('hidden');
+            if (type === 'password') {
+                document.getElementById('currentPassword').value = '';
+                document.getElementById('newPassword').value = '';
+            }
+        }
+        
+        function updateUsername() {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            
+            const currentUser = cookies.user;
+            const newUsername = document.getElementById('newUsername').value.trim();
+            
+            if (!newUsername) {
+                showMessage('dashboardMessage', 'Username cannot be empty!', 'error');
+                return;
+            }
+            
+            if (users[newUsername] && newUsername !== currentUser) {
+                showMessage('dashboardMessage', 'Username already exists!', 'error');
+                return;
+            }
+            
+            if (newUsername !== currentUser) {
+                users[newUsername] = users[currentUser];
+                delete users[currentUser];
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                document.cookie = `user=${newUsername}; path=/`;
+            }
+            
+            document.getElementById('currentUser').textContent = newUsername;
+            document.getElementById('displayUsername').textContent = newUsername;
+            
+            cancelEdit('username');
+            showMessage('dashboardMessage', 'Username updated successfully!', 'success');
+        }
+        
+        function updatePassword() {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            
+            const currentUser = cookies.user;
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            
+            if (!currentPassword || !newPassword) {
+                showMessage('dashboardMessage', 'Please fill in all fields!', 'error');
+                return;
+            }
+            
+            if (users[currentUser].password !== currentPassword) {
+                showMessage('dashboardMessage', 'Current password is incorrect!', 'error');
+                return;
+            }
+            
+            users[currentUser].password = newPassword;
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            cancelEdit('password');
+            showMessage('dashboardMessage', 'Password updated successfully!', 'success');
+        }
+        
+        function register(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            
+            if (users[username]) {
+                showMessage('registerMessage', 'Username already exists!', 'error');
+                return false;
+            }
+            
+            users[username] = {
+                password: password,
+                role: 'user'
+            };
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            showMessage('registerMessage', 'Account created successfully! Please sign in.', 'success');
+            
+            setTimeout(() => {
+                showLogin();
+            }, 1500);
+            
+            return false;
+        }
+        
+        function login(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!users[username] || users[username].password !== password) {
+                showMessage('loginMessage', 'Incorrect username or password.', 'error');
+                return false;
+            }
+            
+            document.cookie = `user=${username}; path=/`;
+            document.cookie = `role=${users[username].role}; path=/`;
+            
+            showDashboard();
+            loadDashboard();
+            
+            return false;
+        }
+        
+        function loadDashboard() {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            
+            const currentUser = cookies.user;
+            const userRole = cookies.role;
+            
+            document.getElementById('currentUser').textContent = currentUser;
+            document.getElementById('displayUsername').textContent = currentUser;
+            document.getElementById('userRole').textContent = userRole;
+            
+            // Update status cards
+            document.getElementById('securityLevel').textContent = userRole === 'admin' ? 'Private' : 'Default';
+            document.getElementById('lastLogin').textContent = new Date().toLocaleTimeString('en-US', { 
+                hour12: true,
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            if (userRole === 'admin') {
+                document.getElementById('adminFlag').classList.remove('hidden');
+                document.getElementById('flagContent').textContent = _0x4b2a;
+                showMessage('dashboardMessage', 'Welcome Admin! You have access to sensitive information.', 'success');
+            } else {
+                document.getElementById('adminFlag').classList.add('hidden');
+                showMessage('dashboardMessage', 'Welcome! You are signed in as a regular user.', 'success');
+            }
+        }
+        
+        function logout() {
+            document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            document.cookie = 'role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            showLogin();
+        }
+        
+        window.onload = function() {
+            // Clean up URL on initial load
+            if (window.location.pathname.endsWith('/index.html')) {
+                const cleanPath = window.location.pathname.replace('/index.html', '/auth');
+                history.replaceState(null, '', cleanPath);
+            }
+            
+            // Handle URL-based routing
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('/register')) {
+                showRegister();
+                return;
+            } else if (currentPath.includes('/auth')) {
+                showLogin();
+                return;
+            }
+            
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            
+            if (cookies.user && cookies.role) {
+                showDashboard();
+                loadDashboard();
+            } else {
+                // Default to signin if no cookies
+                showLogin();
+            }
+        };
+        
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', function(event) {
+            const currentPath = window.location.pathname;
+            
+            if (currentPath.includes('/register')) {
+                document.getElementById('loginForm').classList.add('hidden');
+                document.getElementById('registerForm').classList.remove('hidden');
+                document.getElementById('dashboard').classList.add('hidden');
+            } else if (currentPath.includes('/auth')) {
+                document.getElementById('loginForm').classList.remove('hidden');
+                document.getElementById('registerForm').classList.add('hidden');
+                document.getElementById('dashboard').classList.add('hidden');
+            } else {
+                // Check if user is logged in for dashboard
+                const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                    const [key, value] = cookie.trim().split('=');
+                    acc[key] = value;
+                    return acc;
+                }, {});
+                
+                if (cookies.user && cookies.role) {
+                    showDashboard();
+                    loadDashboard();
+                } else {
+                    showLogin();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

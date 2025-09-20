@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Notes</title>
+    <link rel="icon" type="image/x-icon" href="../logo.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #0d1117;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #f0f6fc;
+        }
+        .notepad-container {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            max-width: 800px;
+            width: 100%;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .github-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px;
+            display: block;
+            border-radius: 50%;
+            padding: 0;
+            box-sizing: border-box;
+            object-fit: cover;
+        }
+        h1 {
+            color: #f0f6fc;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 600;
+        }
+        .notepad-area {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 15px;
+            min-height: 150px;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            border: none;
+            background: transparent;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 14px;
+            resize: vertical;
+            outline: none;
+            color: #f0f6fc;
+        }
+        textarea::placeholder {
+            color: #7d8590;
+        }
+        .save-btn {
+            margin-top: 15px;
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .save-btn:hover {
+            background-color: #2ea043;
+        }
+        .save-btn:active {
+            background-color: #1a7f37;
+        }
+        .save-message {
+            color: #3fb950;
+            margin-top: 10px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="notepad-container">
+        <div class="header">
+            <img src="../logo.webp" alt="GitHub Logo" class="github-logo">
+            <h1>GitHub Notes</h1>
+        </div>
+        <form id="notepadForm">
+            <div class="notepad-area" id="notepadArea"></div>
+            <button type="submit" class="save-btn" id="saveBtn" style="display:none;">Save Note</button>
+        </form>
+        <p class="save-message" id="saveMsg" style="display:none;">✓ Note saved successfully!</p>
+    </div>
+    <script>
+        const x9f2a = "eyItMSI6IkdXU3t0aGF0X3dhc19icnV0YWx9IiwiMCI6IkFkbWluJ3Mgc2VjcmV0IHByb2plY3QgcGxhbnNcblxuUHJvamVjdCBBbHBoYSBEb2N1bWVudGF0aW9uOlxuaHR0cHM6Ly9kcml2ZS5nb29nbGUuY29tL2ZpbGUvZC8xQTJCM0M0RDVlNkY3RzhoOUkwSi92aWV3P3VzcD1zaGFyaW5nXG5cbk1lZXRpbmcgd2l0aCBzdGFrZWhvbGRlcnMgc2NoZWR1bGVkIGZvciBuZXh0IHdlZWsuXG5CdWRnZXQgYXBwcm92YWwgcGVuZGluZyBmcm9tIGZpbmFuY2UgZGVwYXJ0bWVudC4iLCIxIjoiVGhpbmdzIHRvIGNvbXBsZXRlIGJ5IHRoaXMgd2Vla2VuZDpcbi0gRmluaXNoIHByb2plY3QgZG9jdW1lbnRhdGlvblxuLSBTdWJtaXQgcXVhcnRlcmx5IHJlcG9ydFxuLSBTY2hlZHVsZSB0ZWFtIG1lZXRpbmdcbi0gUmV2aWV3IG90aGVyIHByb2plY3Qgbm90ZXNcblxuTm90ZTogTXkgY29sbGVhZ3VlcyBhbHNvIHN0b3JlIHRoZWlyIG5vdGVzIGluIHRoaXMgc3lzdGVtLiIsIjIiOiJNZWV0aW5nIG5vdGVzOlxuLSBEaXNjdXNzIHF1YXJ0ZXJseSByZXN1bHRzXG4tIFBsYW4gdGVhbSBidWlsZGluZyBldmVudFxuLSBSZXZpZXcgc2VjdXJpdHkgcHJvdG9jb2xzXG5cblRoZXJlJ3MgYSBidWcgaW4gdGhpcyBub3RlcyBhcHAgLSBJIGNhbiBzb21ldGltZXMgc2VlIG90aGVyIHBlb3BsZSdzIG5vdGVzISIsIjMiOiJQZXJzb25hbCBkaWFyeTpcblRvZGF5IHdhcyBhIGdvb2QgZGF5LiBIYWQgY29mZmVlIHdpdGggU2FyYWggYW5kIGRpc2N1c3NlZCB0aGUgbmV3IHByb2plY3QuXG5cbkkgbm90aWNlZCB0aGF0IHNvbWUgZW1wbG95ZWVzIGhhdmUgbmVnYXRpdmUgZW1wbG95ZWUgSURzLiBTdHJhbmdlIGRhdGFiYXNlIGRlc2lnbi4uLiIsIjQiOiJQYXNzd29yZCByZW1pbmRlcnM6XG4tIEVtYWlsOiB1c2Ugc3Ryb25nIHBhc3N3b3JkXG4tIEJhbms6IGNoYW5nZSBtb250aGx5XG4tIFdvcms6IHVwZGF0ZSBxdWFydGVybHlcblxuSSdtIGluIGNoYXJnZSBvZiBub3RlcyAwIHRocm91Z2ggNS4gRXZlcnlvbmUgZWxzZSBpcyBvbiB0aGVpciB3YXkuIiwiNSI6IlRyYXZlbCBpdGluZXJhcnk6XG5GbGlnaHQ6IEFBMTIzIGF0IDI6MzAgUE1cbkhvdGVsOiBHcmFuZCBQbGF6YVxuVmFjYXRpb246IEVudGVycHJpc2VcblxuV29uZGVyIGlmIHRoZSBhZG1pbiBoYXMgYSBub3RlIGluIHRoZSBzeXN0ZW0gdG9vPyJ9";
+        const b8c1k = JSON.parse(atob(x9f2a));
+
+        function q3z7m() {
+            const w5n2p = new URLSearchParams(window.location.search);
+            return w5n2p.has('id') ? w5n2p.get('id') : "1";
+        }
+
+        let j4r8v = q3z7m();
+        let h6y1t = b8c1k.hasOwnProperty(j4r8v) ? b8c1k[j4r8v] : "Notes lost.";
+
+        const l9u3s = document.getElementById('notepadArea');
+        const k2e5d = document.getElementById('saveBtn');
+        const m7i0a = document.getElementById('saveMsg');
+        const n1o6f = document.getElementById('notepadForm');
+
+        function p4w9g() {
+            if (j4r8v === "0") {
+                let r8x2c = h6y1t.replace(
+                    'https://drive.google.com/file/d/1A2B3C4D5e6F7G8h9I0J/view?usp=sharing',
+                    '<a href="https://media-cldnry.s-nbcnews.com/image/upload/t_fit-1500w,f_auto,q_auto:best/streams/2012/May/120523/383994-rickroll.jpg" target="_blank" style="color: #58a6ff; text-decoration: none;">https://drive.google.com/file/d/1A2B3C4D5e6F7G8h9I0J/view?usp=sharing</a>'
+                );
+                l9u3s.innerHTML = `<div style="font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 14px; color: #f0f6fc; white-space: pre-wrap;">${r8x2c}</div>`;
+                k2e5d.style.display = "none";
+            } else {
+                l9u3s.innerHTML = `<textarea name="notepad_content" id="notepad_content" placeholder="Start typing your notes...">${h6y1t}</textarea>`;
+                k2e5d.style.display = "inline-block";
+            }
+        }
+
+        p4w9g();
+
+        n1o6f.addEventListener('submit', function(v3q8z) {
+            v3q8z.preventDefault();
+            if (j4r8v !== "0") {
+                const t5b7n = document.getElementById('notepad_content').value;
+                b8c1k[j4r8v] = t5b7n;
+                h6y1t = t5b7n;
+                m7i0a.style.display = "block";
+                setTimeout(() => m7i0a.style.display = "none", 1500);
+            }
+        });
+
+        // Clean up URL on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            if (window.location.pathname.endsWith('/index.html')) {
+                const cleanPath = window.location.pathname.replace('/index.html', '/Larrybook');
+                const newUrl = window.location.protocol + '//' + window.location.host + cleanPath + '?id=' + j4r8v;
+                window.history.replaceState(null, '', newUrl);
+            } else {
+                // If already clean path, just update with current ID
+                const basePath = window.location.pathname.endsWith('/') ? 
+                    window.location.pathname + 'notebook' : 
+                    window.location.pathname.replace(/\/[^\/]*$/, '/Larrybook');
+                const newUrl = window.location.protocol + '//' + window.location.host + basePath + '?id=' + j4r8v;
+                window.history.replaceState(null, '', newUrl);
+            }
+        });
+    </script>
+</body>
+</html>

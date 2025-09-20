@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/logo.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>HackTheWeb CTF Challenges</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #0d1117;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            color: #f0f6fc;
+            padding: 20px;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 0;
+            position: relative;
+        }
+        
+        .submit-flag-btn {
+            position: absolute;
+            top: 40px;
+            right: 0;
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .submit-flag-btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .github-logo {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            display: block;
+            border-radius: 50%;
+            padding: 0;
+            box-sizing: border-box;
+            object-fit: cover;
+        }
+        
+        h1 {
+            color: #f0f6fc;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7d8590;
+            font-size: 18px;
+            font-weight: 400;
+        }
+        
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .challenge-card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        
+        .challenge-card:hover {
+            border-color: #58a6ff;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+        }
+        
+        .challenge-card.solved {
+            border-color: #2ea043;
+            background-color: #0d2818;
+        }
+        
+        .challenge-card.solved:hover {
+            border-color: #3fb950;
+        }
+        
+        .solved-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: #238636;
+            color: #ffffff;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            min-height: 48px;
+        }
+        
+        .challenge-icon {
+            width: 48px;
+            height: 48px;
+            background-color: #21262d;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 20px;
+            color: #58a6ff;
+            flex-shrink: 0;
+        }
+        
+        .challenge-card.solved .challenge-icon {
+            background-color: #238636;
+            color: #ffffff;
+        }
+        
+        .challenge-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .challenge-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #f0f6fc;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+        
+        .challenge-category {
+            font-size: 12px;
+            color: #7d8590;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
+        }
+        
+        .challenge-description {
+            color: #8b949e;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+            flex-grow: 1;
+        }
+        
+        .challenge-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .difficulty {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .difficulty.easy {
+            background-color: #1a2e1a;
+            color: #3fb950;
+            border: 1px solid #2ea043;
+        }
+        
+        .difficulty.medium {
+            background-color: #2e2a1a;
+            color: #f79c37;
+            border: 1px solid #fb8500;
+        }
+        
+        .difficulty.hard {
+            background-color: #2e1a1a;
+            color: #f85149;
+            border: 1px solid #da3633;
+        }
+        
+        .points {
+            color: #58a6ff;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .challenge-footer {
+            margin-top: auto;
+        }
+        
+        .launch-btn {
+            background-color: #238636;
+            color: #ffffff;
+            border: 1px solid rgba(240, 246, 252, 0.1);
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .launch-btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .launch-btn:active {
+            background-color: #1a7f37;
+        }
+        
+        .challenge-card.solved .launch-btn {
+            background-color: #6e7681;
+            cursor: default;
+        }
+        
+        .challenge-card.solved .launch-btn:hover {
+            background-color: #6e7681;
+        }
+        
+        .stats-section {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+        
+        .stats-title {
+            color: #f0f6fc;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+        }
+        
+        .stat-item {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .stat-number {
+            color: #58a6ff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            color: #7d8590;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(4px);
+        }
+        
+        .modal-content {
+            background-color: #161b22;
+            margin: 10% auto;
+            padding: 32px;
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-title {
+            color: #f0f6fc;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .close {
+            color: #7d8590;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .close:hover {
+            color: #f0f6fc;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #f0f6fc;
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            color: #f0f6fc;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        
+        .form-input::placeholder {
+            color: #7d8590;
+        }
+        
+        .submit-btn {
+            background-color: #238636;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+            margin-top: 8px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #2ea043;
+        }
+        
+        .message {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .message.success {
+            background-color: #1a2e1a;
+            color: #3fb950;
+            border: 1px solid #2ea043;
+        }
+        
+        .message.error {
+            background-color: #2e1a1a;
+            color: #f85149;
+            border: 1px solid #da3633;
+        }
+        
+        @media (max-width: 768px) {
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .challenge-card {
+                padding: 20px;
+            }
+            
+            .submit-flag-btn {
+                position: static;
+                margin: 0 auto 20px;
+            }
+            
+            .header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <button class="submit-flag-btn" onclick="openModal()">
+                <i class="fas fa-flag"></i>
+                Submit Flag
+            </button>
+            <img src="logo.webp" alt="GitHub Logo" class="github-logo">
+            <h1>HackTheWeb CTF Challenges</h1>
+            <p class="subtitle">Test your skills with these web security challenges</p>
+        </div>
+        
+        <div class="challenges-grid">
+            <div class="challenge-card" onclick="window.location.href='ViewSource/index.html'" data-challenge="ViewSource">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">ViewSource</div>
+                        <div class="challenge-category">Web</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    Sometimes the most obvious places are the best hiding spots. Inspect this GitHub profile page carefully.
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty easy">Easy</div>
+                    <div class="points">50 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="ViewSource/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+            
+            <div class="challenge-card" onclick="window.location.href='RobotRules/index.html'" data-challenge="RobotRules">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">RobotRules</div>
+                        <div class="challenge-category">Web</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    Every website has rules for search engines. What secrets might they be hiding from crawlers?
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty easy">Easy</div>
+                    <div class="points">75 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="RobotRules/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+            
+            <div class="challenge-card" onclick="window.location.href='NoteBook/index.html'" data-challenge="NoteBook">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">NoteBook</div>
+                        <div class="challenge-category">Web</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    Explore a GitHub Notes application and discover hidden secrets. Can you find the flag hidden in the system?
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty easy">Easy</div>
+                    <div class="points">100 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="bookworm/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+            
+            <div class="challenge-card" onclick="window.location.href='Cookies/index.html'" data-challenge="Cookies">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-cookie-bite"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">Cookies</div>
+                        <div class="challenge-category">Web</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    A GitHub authentication system with user management. Find a way to escalate your privileges and access admin content.
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty easy">Easy</div>
+                    <div class="points">100 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="Cookies/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+            
+            <div class="challenge-card" onclick="window.location.href='DigitalFootprint/index.html'" data-challenge="DigitalFootprint">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">DigitalFootprint</div>
+                        <div class="challenge-category">OSINT</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    A developer left traces across the internet. Follow the breadcrumbs to uncover their secrets.
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty medium">Medium</div>
+                    <div class="points">150 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="DigitalFootprint/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+            
+            <div class="challenge-card" onclick="window.location.href='CodeRunner/index.html'" data-challenge="CodeRunner">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <div class="challenge-title">CodeRunner</div>
+                        <div class="challenge-category">Web</div>
+                    </div>
+                </div>
+                <div class="challenge-description">
+                    A GitHub code playground that executes user input. Can you make it run more than intended?
+                </div>
+                <div class="challenge-meta">
+                    <div class="difficulty medium">Medium</div>
+                    <div class="points">200 points</div>
+                </div>
+                <div class="challenge-footer">
+                    <a href="CodeRunner/index.html" class="launch-btn">Launch</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats-section">
+            <div class="stats-title">Challenge Statistics</div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalChallenges">6</div>
+                    <div class="stat-label">Total Challenges</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="solvedChallenges">0</div>
+                    <div class="stat-label">Solved Challenges</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="totalPoints">675</div>
+                    <div class="stat-label">Total Points</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="gainedPoints">0</div>
+                    <div class="stat-label">Gained Points</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flag Submission Modal -->
+    <div id="flagModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">
+                    <i class="fas fa-flag"></i>
+                    Submit Flag
+                </h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form onsubmit="submitFlag(event)">
+                <div class="form-group">
+                    <label for="challengeName" class="form-label">Challenge Name:</label>
+                    <select id="challengeName" class="form-input" required>
+                        <option value="">Select a challenge...</option>
+                        <option value="ViewSource">ViewSource</option>
+                        <option value="RobotRules">RobotRules</option>
+                        <option value="NoteBook">NoteBook</option>
+                        <option value="Cookies">Cookies</option>
+                        <option value="DigitalFootprint">DigitalFootprint</option>
+                        <option value="CodeRunner">CodeRunner</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="flagInput" class="form-label">Flag:</label>
+                    <input type="text" id="flagInput" class="form-input" placeholder="Enter your flag..." required>
+                </div>
+                <button type="submit" class="submit-btn">Submit Flag</button>
+            </form>
+            <div id="flagMessage"></div>
+        </div>
+    </div>
+
+    <script>
+        const challenges = {
+            'ViewSource': { points: 50 },
+            'RobotRules': { points: 75 },
+            'NoteBook': { points: 100 },
+            'Cookies': { points: 100 },
+            'DigitalFootprint': { points: 150 },
+            'CodeRunner': { points: 200 }
+        };
+
+        const _0x2f4a = [
+            'R1dTe3YxM3dfczB1cmMzXzFzX24wdF9oNHJkfQ==',
+            'R1dTe3JvYm90c190eHRfc2VjcmV0c30=',
+            'R1dTe3RoYXRfd2FzX2JydXRhbH0=',
+            'R1dTe2MwMGsxM3NfNHIzX24wdF9zM2N1cjNfNHRfNGxsfQ==',
+            'R1dTe29zaW50X21hc3Rlcn0=',
+            'R1dTe2NvZGVfaW5qZWN0aW9uX3N1Y2Nlc3N9'
+        ];
+
+        const _0x1b7c = ['ViewSource', 'RobotRules', 'NoteBook', 'Cookies', 'DigitalFootprint', 'CodeRunner'];
+
+        // Decode function
+        const _decode = (str) => atob(str);
+
+        // Build flags object
+        const flags = {};
+        _0x1b7c.forEach((key, index) => {
+            flags[key] = _decode(_0x2f4a[index]);
+        });
+
+        let solvedChallenges = JSON.parse(localStorage.getItem('solvedChallenges') || '[]');
+
+        function updateUI() {
+            // Update challenge cards
+            solvedChallenges.forEach(challengeName => {
+                const card = document.querySelector(`[data-challenge="${challengeName}"]`);
+                if (card) {
+                    card.classList.add('solved');
+                    if (!card.querySelector('.solved-badge')) {
+                        const badge = document.createElement('div');
+                        badge.className = 'solved-badge';
+                        badge.innerHTML = '<i class="fas fa-check"></i> Solved';
+                        card.appendChild(badge);
+                    }
+                    const launchBtn = card.querySelector('.launch-btn');
+                    if (launchBtn) {
+                        launchBtn.textContent = 'Completed';
+                    }
+                }
+            });
+
+            // Update statistics
+            const solvedCount = solvedChallenges.length;
+            const gainedPoints = solvedChallenges.reduce((total, challengeName) => {
+                return total + (challenges[challengeName]?.points || 0);
+            }, 0);
+
+            document.getElementById('solvedChallenges').textContent = solvedCount;
+            document.getElementById('gainedPoints').textContent = gainedPoints;
+        }
+
+        function openModal() {
+            document.getElementById('flagModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('flagModal').style.display = 'none';
+            document.getElementById('flagMessage').innerHTML = '';
+            document.getElementById('flagInput').value = '';
+            document.getElementById('challengeName').value = '';
+        }
+
+        function submitFlag(event) {
+            event.preventDefault();
+            
+            const challengeName = document.getElementById('challengeName').value;
+            const flagInput = document.getElementById('flagInput').value.trim();
+            const messageDiv = document.getElementById('flagMessage');
+            
+            if (flags[challengeName] === flagInput) {
+                if (!solvedChallenges.includes(challengeName)) {
+                    solvedChallenges.push(challengeName);
+                    localStorage.setItem('solvedChallenges', JSON.stringify(solvedChallenges));
+                    updateUI();
+                    
+                    const points = challenges[challengeName]?.points || 0;
+                    messageDiv.innerHTML = `<div class="message success"><i class="fas fa-check-circle"></i> Correct! Flag accepted for ${challengeName} (+${points} points)</div>`;
+                } else {
+                    messageDiv.innerHTML = `<div class="message success"><i class="fas fa-info-circle"></i> You already solved ${challengeName}!</div>`;
+                }
+                setTimeout(() => {
+                    closeModal();
+                }, 2000);
+            } else {
+                messageDiv.innerHTML = '<div class="message error"><i class="fas fa-times-circle"></i> Incorrect flag. Try again!</div>';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('flagModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Initialize UI on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUI();
+        });
+    </script>
+</body>
+</html>

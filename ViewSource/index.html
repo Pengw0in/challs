@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="../logo.ico">
+  <title>larry_wasHere (Larry) · GitHub</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      margin: 0;
+      background-color: #0d1117;
+      color: #f0f6fc;
+      min-height: 100vh;
+    }
+    
+    .topbar {
+      background-color: #161b22;
+      padding: 16px 20px;
+      color: #f0f6fc;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      font-size: 18px;
+      border-bottom: 1px solid #30363d;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 32px auto;
+      display: flex;
+      gap: 32px;
+      padding: 0 24px;
+    }
+    
+    .sidebar {
+      width: 296px;
+      position: sticky;
+      top: 32px;
+      height: fit-content;
+    }
+    
+    .avatar {
+      width: 296px;
+      height: 296px;
+      border-radius: 50%;
+      display: block;
+      margin-bottom: 16px;
+      border: 1px solid #30363d;
+    }
+    
+    .username {
+      font-size: 26px;
+      font-weight: 600;
+      color: #f0f6fc;
+      margin-bottom: 4px;
+    }
+    
+    .name {
+      font-size: 20px;
+      color: #8b949e;
+      margin-bottom: 16px;
+    }
+    
+    .bio {
+      color: #8b949e;
+      font-size: 16px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    
+    .stats {
+      color: #f0f6fc;
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+    
+    .stats strong {
+      color: #f0f6fc;
+      font-weight: 600;
+    }
+    
+    .contact {
+      color: #8b949e;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    
+    .contact a {
+      color: #58a6ff;
+      text-decoration: none;
+    }
+    
+    .contact a:hover {
+      text-decoration: underline;
+    }
+    
+    .main {
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card h3, .card h4 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      color: #f0f6fc;
+      font-weight: 600;
+    }
+    
+    .card p {
+      color: #8b949e;
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    
+    .repo-card {
+      background-color: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    
+    .repo-card:hover {
+      border-color: #58a6ff;
+    }
+    
+    .repo-card h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #58a6ff;
+      font-weight: 600;
+    }
+    
+    .repo-card p {
+      color: #8b949e;
+      font-size: 14px;
+      margin: 0;
+      line-height: 1.5;
+    }
+    
+    footer {
+      text-align: center;
+      color: #7d8590;
+      font-size: 13px;
+      margin: 60px 0 40px;
+      padding: 24px;
+      border-top: 1px solid #30363d;
+    }
+    
+    /* Contributions grid */
+    .contributions-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .contributions-header div {
+      color: #7d8590;
+      font-size: 13px;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(53, 11px);
+      gap: 3px;
+      margin-bottom: 8px;
+    }
+    
+    .sq {
+      width: 11px;
+      height: 11px;
+      border-radius: 2px;
+    }
+    
+    .c0 { background-color: #161b22; border: 1px solid #30363d; }
+    .c1 { background-color: #0e4429; }
+    .c2 { background-color: #006d32; }
+    .c3 { background-color: #26a641; }
+    .c4 { background-color: #39d353; }
+    
+    .contributions-legend {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: #7d8590;
+    }
+    
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        gap: 24px;
+        margin: 24px auto;
+        padding: 0 16px;
+      }
+      
+      .sidebar {
+        width: 100%;
+        position: static;
+        text-align: center;
+      }
+      
+      .avatar {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 16px;
+      }
+      
+      .grid {
+        grid-template-columns: repeat(26, 11px);
+      }
+      
+      .topbar {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">GitHub - HackTheWeb</div>
+
+  <div class="container">
+    <aside class="sidebar">
+      <img src="../logo.webp" alt="avatar" class="avatar">
+      <div class="username">larry_wasHere</div>
+      <div class="name">Larry</div>
+      <p class="bio">Software tinkerer • CTF hobbyist • I occasionally hide secrets in source code.</p>
+      <p class="stats"><strong>10</strong> Followers · <strong>5</strong> Following · <strong>12</strong> Repos</p>
+      <div class="contact">
+        📍 City<br>
+        🔗 <a href="https://i.imgflip.com/a6opau.jpg">Don't click me</a>
+      </div>
+    </aside>
+
+    <main class="main">
+      <!-- The flag is split into three parts -->
+      <!-- Here's the First Part: GWS{v13w_s0urc3_ -->
+      <div class="card">
+        <h3>About</h3>
+        <p>You just wasted your time reading this sentence.  
+        Is there anything on this page? No one really takes inspection seriously... what you're looking for is right under your nose.</p>
+      </div>
+
+      <div class="repo-card">
+        <h3>secret-repo</h3>
+        <p>Larry likes to play ctfs and he would love it if you join him.</p>
+      </div>
+      
+      <div class="repo-card">
+        <h3>ctf-practice</h3>
+        <p>Collection of small challenges to learn offensive and defensive skills.</p>
+      </div>
+      
+      <div class="repo-card">
+        <h3>hello-world</h3>
+        <!-- Woot! Second Part: 1s_n0t -->
+        <p>My first repo — hello!</p>
+      </div>
+
+      <!-- Contributions moved to bottom -->
+      <div class="card">
+        <h4>Contributions</h4>
+        <div class="contributions-header">
+          <div>Past year</div>
+          <div>256 contributions</div>
+        </div>
+        <div class="grid">
+          <!-- Example grid with contribution squares -->
+          <div class="sq c0"></div><div class="sq c1"></div><div class="sq c2"></div><div class="sq c3"></div><div class="sq c4"></div>
+          <div class="sq c1"></div><div class="sq c0"></div><div class="sq c2"></div><div class="sq c1"></div><div class="sq c3"></div>
+          <div class="sq c2"></div><div class="sq c3"></div><div class="sq c0"></div><div class="sq c4"></div><div class="sq c2"></div>
+          <div class="sq c0"></div><div class="sq c1"></div><div class="sq c3"></div><div class="sq c0"></div><div class="sq c2"></div>
+          <div class="sq c3"></div><div class="sq c2"></div><div class="sq c1"></div><div class="sq c4"></div><div class="sq c0"></div>
+          <div class="sq c1"></div><div class="sq c0"></div><div class="sq c2"></div><div class="sq c3"></div><div class="sq c1"></div>
+          <div class="sq c4"></div><div class="sq c2"></div><div class="sq c0"></div><div class="sq c1"></div><div class="sq c3"></div>
+          <div class="sq c0"></div><div class="sq c3"></div><div class="sq c2"></div><div class="sq c0"></div><div class="sq c4"></div>
+          <div class="sq c2"></div><div class="sq c1"></div><div class="sq c0"></div><div class="sq c3"></div><div class="sq c2"></div>
+          <div class="sq c1"></div><div class="sq c4"></div><div class="sq c3"></div><div class="sq c0"></div><div class="sq c1"></div>
+          <div class="sq c0"></div><div class="sq c2"></div><div class="sq c1"></div>
+          <!-- Last part is here!! _h4rd} -->
+          <!-- Continue pattern... -->
+        </div>
+        <div class="contributions-legend">
+          <span>Less</span>
+          <div class="legend-item">
+            <div class="sq c0"></div>
+            <div class="sq c1"></div>
+            <div class="sq c2"></div>
+            <div class="sq c3"></div>
+            <div class="sq c4"></div>
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <footer>
+    © 2025 GitHub, Inc.
+  </footer>
+
+  <!-- No, the flag isn't at the end... -->
+</body>
+</html>
