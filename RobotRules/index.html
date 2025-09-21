@@ -320,13 +320,11 @@
   </footer>
 
   <script>
-    // Clean up URL if it shows index.html
     if (window.location.pathname.endsWith('/index.html')) {
       const cleanPath = window.location.pathname.replace('/index.html', '/');
       history.replaceState(null, '', cleanPath);
     }
 
-    // Handle file navigation without showing index.html
     function navigateToFile(filename) {
       const currentPath = window.location.pathname;
       const basePath = currentPath.endsWith('/') ? currentPath : currentPath.substring(0, currentPath.lastIndexOf('/') + 1);

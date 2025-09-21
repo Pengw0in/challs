@@ -135,7 +135,6 @@
             }
         }
 
-        // Add id parameter to URL if not present
         function updateURL() {
             const currentUrl = new URL(window.location);
             if (!currentUrl.searchParams.has('id')) {
@@ -144,7 +143,6 @@
             }
         }
 
-        // Initialize the page
         function init() {
             updateURL();
             p4w9g();
@@ -163,7 +161,6 @@
             }
         });
 
-        // Monitor for URL parameter changes (for IDOR vulnerability)
         setInterval(function() {
             const currentId = q3z7m();
             if (currentId !== j4r8v) {
@@ -173,7 +170,6 @@
             }
         }, 500);
 
-        // Handle browser back/forward navigation
         window.addEventListener('popstate', function() {
             const newId = q3z7m();
             if (newId !== j4r8v) {

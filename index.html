@@ -575,7 +575,6 @@
         </div>
     </div>
 
-    <!-- Flag Submission Modal -->
     <div id="flagModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -614,19 +613,8 @@
             'Cookies': { points: 100 }
         };
 
-        const _0x2f4a = [
-            'R1dTe2hvd190b19tYWtlX2xlbW9uYWRlfQ==', // GWS{how_to_make_lemonade}
-            'R1dTe21yX1IwYjB0fQ==', // GWS{mr_R0b0t}
-            'R1dTe3RoaXNfd2FzX2JydXRhbH0=', // GWS{etc/hahaha/}
-            'R1dTe2MwMDAwa2kzX20wbnN0M3J9'
-        ];
-
-        const _0x1b7c = ['ViewSource', 'RobotRules', 'NoteBook', 'Cookies'];
-
-        // Decode function
+        const _0x2f4a = ['R1dTe2hvd190b19tYWtlX2xlbW9uYWRlfQ==','R1dTe21yX1IwYjB0fQ==','R1dTe3RoaXNfd2FzX2JydXRhbH0=','R1dTe2MwMDAwa2kzX20wbnN0M3J9'];const _0x1b7c = ['ViewSource', 'RobotRules', 'NoteBook', 'Cookies'];
         const _decode = (str) => atob(str);
-
-        // Build flags object
         const flags = {};
         _0x1b7c.forEach((key, index) => {
             flags[key] = _decode(_0x2f4a[index]);
@@ -635,7 +623,6 @@
         let solvedChallenges = JSON.parse(localStorage.getItem('solvedChallenges') || '[]');
 
         function updateUI() {
-            // Update challenge cards
             solvedChallenges.forEach(challengeName => {
                 const card = document.querySelector(`[data-challenge="${challengeName}"]`);
                 if (card) {
@@ -653,7 +640,6 @@
                 }
             });
 
-            // Update statistics
             const solvedCount = solvedChallenges.length;
             const gainedPoints = solvedChallenges.reduce((total, challengeName) => {
                 return total + (challenges[challengeName]?.points || 0);
@@ -700,7 +686,6 @@
             }
         }
 
-        // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('flagModal');
             if (event.target === modal) {
@@ -708,7 +693,6 @@
             }
         }
 
-        // Initialize UI on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateUI();
         });
