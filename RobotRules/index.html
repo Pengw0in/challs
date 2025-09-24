@@ -31,7 +31,7 @@
     }
     
     .topbar .github-text {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
     }
     
@@ -257,17 +257,8 @@
 </head>
 <body>
   <div class="topbar">
-    <i class="fab fa-github"></i>
+    <img src="../logo.webp" alt="GitHub Logo" style="width: 36px; height: 36px; margin-right: 8px; border-radius: 50%;">
     <span class="github-text">GitHub - HackTheWeb</span>
-  </div>
-
-  <div class="repo-header">
-    <h1><span>larry_wasHere</span> / Secret-repo</h1>
-    <div class="repo-actions">
-      <button><i class="fas fa-star"></i> Star</button>
-      <button><i class="fas fa-code-branch"></i> Fork</button>
-      <button><i class="fas fa-eye"></i> Watch</button>
-    </div>
   </div>
 
   <nav class="tabs">
@@ -294,9 +285,18 @@
   </nav>
 
   <div class="layout">
+    <!-- Profile section -->
+    <div style="display: flex; align-items: center; padding: 8px 16px; background-color: #161b22; border: 1px solid #30363d; border-radius: 12px; margin-bottom: 24px;">
+      <img src="../pfp.png" alt="larry_wasHere" style="width: 48px; height: 48px; border-radius: 50%; margin-right: 16px; border: 1px solid #30363d;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div style="font-size: 16px; font-weight: 600; color: #f0f6fc;">larry_wasHere</div>
+        <div style="font-size: 12px; color: #8b949e; background-color: #21262d; border: 1px solid #30363d; border-radius: 12px; padding: 2px 8px;">Public</div>
+      </div>
+    </div>
+
     <table class="file-list">
       <tr>
-        <td><i class="fas fa-video"></i></td>
+        <td><i class="fas fa-file-text"></i></td>
         <td><a href="javascript:void(0)" onclick="window.location.href = window.location.pathname.replace('/index.html', '') + '/flag.mp4'">flag.txt</a></td>
         <td align="right"><span class="file-size">2.3 MB</span></td>
       </tr>
